@@ -1,0 +1,46 @@
+group 'games'
+version '0.0.1'
+
+apply plugin: 'groovy'
+
+sourceCompatibility = 1.5
+
+//create a single Jar with all dependencies
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'File Submitter Application',
+            'Implementation-Version': project.version + '+' + (System.getenv('BUILD_NUMBER') ?: 'local'),
+            'Main-Class': 'games.Application'
+    }
+    baseName = project.name
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+//Pass on arguments for gradle run, for example: `./gradlew run -Drun.args='-d /data/nobackup -s testStream -m http://localhost:8080/ingest-manager'`
+task run (type:JavaExec) {
+    main = 'games.Application'
+    classpath = sourceSets.main.runtimeClasspath
+
+    if(System.getProperty("run.args")) {
+        args System.getProperty("run.args").split()
+    }
+}
+
+test {
+    jvmArgs += [ "-XX:MaxPermSize=256m" ]
+    systemProperties 'logback.configurationFile' : new File(projectDir,'src/test/resources/logback-test.groovy').absolutePath
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.3'
+    compile 'ch.qos.logback:logback-classic:1.1.3'
+    compile 'commons-cli:commons-cli:1.3'
+
+    testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
+    testRuntime "cglib:cglib-nodep:3.1"          // allows mocking of classes (in addition to interfaces)
+    testRuntime "org.objenesis:objenesis:2.1"    // allows mocking of classes without default constructor (together with CGLIB)
+}
