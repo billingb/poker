@@ -9,7 +9,7 @@ class PokerHandSpec extends Specification {
     pokerHand = new PokerHand()
   }
 
-  void 'it returns unkown for an unknown hand'() {
+  void 'it returns unknown for an unknown hand'() {
     when:
     def score = pokerHand.score('2s 3s 4s 5s 6s')
 

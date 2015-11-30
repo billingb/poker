@@ -22,7 +22,7 @@ task run (type:JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 
     if(System.getProperty("run.args")) {
-        args System.getProperty("run.args").split()
+        args System.getProperty("run.args")
     }
 }
 
