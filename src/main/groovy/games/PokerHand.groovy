@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory
 class PokerHand {
   final static Logger log = LoggerFactory.getLogger(PokerHand)
 
-  String score(hand) {
+  String identify(hand) {
     return "unknown hand: ${hand}"
   }
 }

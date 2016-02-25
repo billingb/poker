@@ -10,7 +10,7 @@ class Application {
   @SuppressWarnings('CatchException')
   static void run(String[] args) {
     PokerHand pokerHand = new PokerHand()
-    println pokerHand.score(args[0])
+    println pokerHand.identify(args[0])
   }
 
   static void main(String[] args) {

@@ -11,9 +11,9 @@ class PokerHandSpec extends Specification {
 
   void 'it returns unknown for an unknown hand'() {
     when:
-    def score = pokerHand.score('2s 3s 4s 5s 6s')
+    def desc = pokerHand.identify('2s 3s 4s 5s 6s')
 
     then:
-    score.contains('unknown hand')
+    desc.contains('unknown hand')
   }
 }
